@@ -1,2 +1,178 @@
-# ¡Hola Mundo!
-Morillo
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diseño Interactivo</title>
+
+<style>
+:root {
+    --bg: #0b0b0b;
+    --card: #111;
+    --border: rgba(255,255,255,0.7);
+    --text: #ffffff;
+    --glow: rgba(255,255,255,0.3);
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    margin: 0;
+    background: radial-gradient(circle at top, #151515, #050505);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+}
+
+/* CONTENEDOR PRINCIPAL */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    height: 90%;
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    padding: 40px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    position: relative;
+}
+
+/* BOTONES GENERALES */
+.btn {
+    border: 1.5px solid var(--border);
+    background: linear-gradient(145deg, #0f0f0f, #050505);
+    color: white;
+    padding: 14px 30px;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: 
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+    box-shadow: 0 0 0 rgba(255,255,255,0);
+}
+
+.btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 20px var(--glow);
+}
+
+.btn:active {
+    transform: scale(0.96);
+}
+
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* TITULO CENTRAL */
+.title-box {
+    margin: auto;
+    width: 60%;
+    height: 180px;
+    border: 2px solid var(--border);
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    letter-spacing: 3px;
+    position: relative;
+    overflow: hidden;
+}
+
+.title-box::before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 60%);
+    animation: glowMove 6s linear infinite;
+}
+
+@keyframes glowMove {
+    0% { transform: translate(-50%, -50%); }
+    50% { transform: translate(0%, 0%); }
+    100% { transform: translate(-50%, -50%); }
+}
+
+.title-text {
+    position: relative;
+    z-index: 2;
+}
+
+/* FOOTER */
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer .btn {
+    width: 100px;
+    text-align: center;
+}
+
+/* EFECTO PARALLAX SUAVE */
+.container:hover {
+    transition: transform 0.4s ease;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="container">
+    <!-- HEADER -->
+    <div class="header">
+        <button class="btn">NAMES</button>
+        <button class="btn">DATE</button>
+    </div>
+
+    <!-- TITULO -->
+    <div class="title-box">
+        <div class="title-text">TITLE</div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <button class="btn">1</button>
+        <button class="btn">2</button>
+        <button class="btn">3</button>
+    </div>
+</div>
+
+<script>
+/* EFECTO MOVIMIENTO SUAVE AL MOVER EL RATÓN */
+const container = document.getElementById("container");
+
+container.addEventListener("mousemove", (e) => {
+    const rect = container.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+
+    container.style.transform = `
+        perspective(1000px)
+        rotateY(${x * 0.01}deg)
+        rotateX(${-y * 0.01}deg)
+    `;
+});
+
+container.addEventListener("mouseleave", () => {
+    container.style.transform = `
+        perspective(1000px)
+        rotateY(0deg)
+        rotateX(0deg)
+    `;
+});
+</script>
+
+</body>
+</html>
