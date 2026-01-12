@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio - Ayoub Sfili</title>
+<title>Ayoub Sfili - Cyber Lab Master</title>
 <style>
 :root {
     --bg: #0b0b0b;
     --card: #111;
     --border: rgba(255,255,255,0.7);
     --text: #ffffff;
+    --accent: #0f0;
     --glow: rgba(255,255,255,0.3);
 }
 * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
@@ -24,71 +25,66 @@ body {
     overflow: hidden;
 }
 .container {
-    width: 90%;
-    max-width: 1200px;
-    height: 90%;
+    width: 95%;
+    max-width: 1300px;
+    height: 92%;
     border: 2px solid var(--border);
     border-radius: 20px;
-    padding: 40px;
+    padding: 25px;
     display: grid;
     grid-template-rows: auto 1fr auto;
     position: relative;
     transition: transform 0.1s ease-out;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(10px);
 }
+.header { display: flex; justify-content: space-between; margin-bottom: 15px; z-index: 10; }
 .btn {
     border: 1.5px solid var(--border);
     background: linear-gradient(145deg, #0f0f0f, #050505);
     color: white;
-    padding: 14px 30px;
-    border-radius: 14px;
+    padding: 8px 15px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.25s ease;
+    transition: all 0.2s ease;
     text-transform: uppercase;
-    font-size: 12px;
+    font-size: 10px;
+    margin: 2px;
 }
-.btn:hover { transform: translateY(-4px); box-shadow: 0 0 20px var(--glow); background: #fff; color: #000; }
-.header { display: flex; justify-content: space-between; }
-.main-content { display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.btn:hover, .btn.active { background: #fff; color: #000; box-shadow: 0 0 10px var(--glow); }
 
-/* VISTA INICIAL EXACTA */
-.title-box {
-    width: 60%;
-    height: 180px;
-    border: 2px solid var(--border);
-    border-radius: 40px;
+.main-content { display: flex; align-items: center; justify-content: center; overflow: hidden; height: 100%; }
+
+/* FILTROS */
+#projects-view { display: none; width: 100%; height: 100%; flex-direction: column; }
+.filter-container {
+    padding: 0 10px 15px 10px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
+    flex-direction: column;
+    gap: 10px;
 }
-.title-box::before {
-    content: "";
-    position: absolute;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 60%);
-    animation: glowMove 6s linear infinite;
-}
-@keyframes glowMove {
-    0% { transform: translate(-50%, -50%); }
-    50% { transform: translate(0%, 0%); }
-    100% { transform: translate(-50%, -50%); }
-}
-.title-text { position: relative; z-index: 2; text-align: center; }
-.title-text h1 { margin: 0; font-size: 32px; letter-spacing: 3px; }
-.title-text p { margin-top: 10px; opacity: 0.7; letter-spacing: 2px; }
-
-/* PROYECTOS GRID */
-#projects-view {
-    display: none;
+.search-box {
     width: 100%;
-    height: 100%;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 15px;
-    overflow-y: auto;
-    padding: 20px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    outline: none;
 }
+.filter-buttons { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; }
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 12px;
+    overflow-y: auto; 
+    padding: 10px;
+    height: 100%;
+}
+.grid-container::-webkit-scrollbar { width: 4px; }
+.grid-container::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
 .card {
     border: 1px solid var(--border);
     background: var(--card);
@@ -96,13 +92,31 @@ body {
     padding: 15px;
     text-align: center;
     cursor: pointer;
+    transition: 0.3s;
+    position: relative;
 }
-.card:hover { background: #fff; color: #000; }
+.card:hover { transform: scale(1.03); background: #fff; color: #000; }
+.card strong { display: block; font-size: 13px; }
+.card small { color: var(--accent); font-size: 9px; text-transform: uppercase; }
+.tag { font-size: 8px; position: absolute; top: 5px; right: 10px; opacity: 0.5; }
 
-/* EJECUCIÓN */
-#app-view { display: none; flex-direction: column; align-items: center; width: 100%; }
-canvas { border: 1px solid #fff; background: #000; }
-.footer { display: flex; justify-content: space-between; }
+/* VISTAS */
+#home-view .title-box {
+    width: 500px; height: 180px;
+    border: 2px solid var(--border); border-radius: 40px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+}
+#home-view h1 { font-weight: 900; letter-spacing: 5px; margin: 0; }
+
+#app-view, #contact-view { display: none; flex-direction: column; width: 100%; max-width: 600px; z-index: 5; }
+.tool-box { background: #111; padding: 25px; border: 1px solid #333; border-radius: 15px; }
+input, textarea { width: 100%; background: #000; color: var(--accent); border: 1px solid #444; padding: 12px; margin: 10px 0; border-radius: 5px; font-family: monospace; }
+.res { background: #050505; border-left: 3px solid var(--accent); padding: 12px; color: var(--accent); margin-top: 10px; font-size: 13px; min-height: 60px; white-space: pre-wrap; }
+
+.footer { display: flex; justify-content: space-between; margin-top: 15px; }
+.contact-data { text-align: left; line-height: 1.8; }
+.lnk-icon { display: inline-block; margin-top: 10px; color: #0077b5; text-decoration: none; font-weight: bold; border: 1px solid #0077b5; padding: 5px 15px; border-radius: 5px; }
 </style>
 </head>
 <body>
@@ -110,341 +124,209 @@ canvas { border: 1px solid #fff; background: #000; }
 <div class="container" id="container">
     <div class="header">
         <button class="btn" onclick="location.reload()">AYOUB SFILI</button>
-        <button class="btn">2025 · ACTIVE</button>
+        <button class="btn" style="color:var(--accent)">● LAB MASTER v6.5</button>
     </div>
 
     <div class="main-content">
-        <div class="title-box" id="home-view">
-            <div class="title-text">
-                <h1>Portfolio</h1>
-                <p>CREATIVE · INTERACTIVE · MODERN</p>
+        <div id="home-view">
+            <div class="title-box">
+                <div style="text-align:center">
+                    <h1>AYOUB SFILI</h1>
+                    <p style="opacity:0.8; font-size:14px">Estudiante de ciberseguridad en ITB</p>
+                </div>
             </div>
         </div>
 
-        <div id="projects-view"></div>
+        <div id="projects-view">
+            <div class="filter-container">
+                <input type="text" id="search-input" class="search-box" placeholder="Escribe para buscar..." oninput="applyFilters()">
+                <div class="filter-buttons">
+                    <button class="btn" onclick="setFilter('all')">Todos</button>
+                    <button class="btn" onclick="setFilter('func')" style="color:var(--accent)">Funcionales</button>
+                    <button class="btn" onclick="setFilter('Cripto')">Criptografía</button>
+                    <button class="btn" onclick="setFilter('Net')">Redes</button>
+                    <button class="btn" onclick="setFilter('Conv')">Conversores</button>
+                    <button class="btn" onclick="setFilter('Web')">Web/Defensa</button>
+                </div>
+            </div>
+            <div id="grid-container" class="grid-container"></div>
+        </div>
+
+        <div id="contact-view">
+            <h3 style="text-align:center">> FICHA DE CONTACTO</h3>
+            <div class="tool-box contact-data">
+                <p><b>NOMBRE:</b> Ayoub Sfili Doggoun</p>
+                <p><b>TELÉFONO:</b> +34 652458952</p>
+                <p><b>EMAIL:</b> ayoub.sfili.7e9@gmail.com</p>
+                <a href="https://www.linkedin.com" target="_blank" class="lnk-icon">LINKEDIN 🔗</a>
+            </div>
+            <button class="btn" style="margin-top:20px; width:100%" onclick="location.reload()">VOLVER</button>
+        </div>
 
         <div id="app-view">
-            <div id="app-container" style="width:100%; text-align:center;"></div>
-            <button class="btn" style="margin-top:20px" onclick="showProjects()">VOLVER</button>
+            <div id="app-container"></div>
+            <button class="btn" style="margin-top:20px; width:100%" onclick="showProjects()">VOLVER AL PANEL</button>
         </div>
     </div>
 
     <div class="footer">
-        <button class="btn" onclick="location.reload()">ABOUT</button>
-        <button class="btn" onclick="showProjects()">PROJECTS</button>
-        <button class="btn" onclick="alert('ayoub.sfili.7e9@itb.cat')">CONTACT</button>
+        <button class="btn" onclick="location.reload()">INICIO</button>
+        <button class="btn" onclick="showProjects()">PROYECTOS</button>
+        <button class="btn" onclick="showContact()">CONTACTO</button>
     </div>
 </div>
 
 <script>
 const projects = [
-    {n:"Neon Jump", t:"G"}, {n:"Hex Gen", t:"S"}, {n:"Aim Trainer", t:"G"}, {n:"Pass Gen", t:"S"},
-    {n:"Snake", t:"G"}, {n:"Unit Conv", t:"S"}, {n:"Reaction", t:"G"}, {n:"Notes", t:"S"},
-    {n:"Clicker", t:"G"}, {n:"Timer", t:"S"}, {n:"Gravity", t:"G"}, {n:"Binary", t:"S"},
-    {n:"Math", t:"G"}, {n:"ColorMix", t:"S"}, {n:"Runner", t:"G"}, {n:"Shadows", t:"S"},
-    {n:"Box Fight", t:"G"}, {n:"Text Flip", t:"S"}, {n:"Pong", t:"G"}, {n:"Task List", t:"S"}
+    // FUNCIONALES (f: true)
+    {n:"SHA-256", d:"Hash", c:"Cripto", f:true},
+    {n:"Base64", d:"Encoder", c:"Conv", f:true},
+    {n:"IP Tracker", d:"Geoloc", c:"Net", f:true},
+    {n:"Binary Conv", d:"Data", c:"Conv", f:true},
+    {n:"Morse Code", d:"Signal", c:"Conv", f:true},
+    {n:"HEX View", d:"Bytes", c:"Conv", f:true},
+    {n:"MAC Gen", d:"Hardware", c:"Net", f:true},
+    {n:"Metadata", d:"Files", c:"Web", f:true},
+    
+    // EN DESARROLLO (f: false)
+    {n:"DNS Sim", d:"DNS", c:"Net", f:false},
+    {n:"IDS Monitor", d:"Logs", c:"Web", f:false},
+    {n:"SQLi Scan", d:"DB Guard", c:"Web", f:false},
+    {n:"XSS Shield", d:"WAF", c:"Web", f:false},
+    {n:"ROT13", d:"Cipher", c:"Cripto", f:false},
+    {n:"Entropía", d:"Math", c:"Cripto", f:false},
+    {n:"JWT Inspect", d:"Tokens", c:"Web", f:false},
+    {n:"Port Scan", d:"Scanner", c:"Net", f:false},
+    {n:"Packet Sniffer", d:"Network", c:"Net", f:false},
+    {n:"Wifi Auditor", d:"Wireless", c:"Net", f:false},
+    {n:"Hash Cracker", d:"Brute", c:"Cripto", f:false},
+    {n:"Decryption", d:"Keys", c:"Cripto", f:false},
+    {n:"Vulnerability", d:"Audit", c:"Web", f:false},
+    {n:"Dark Web", d:"Monitor", c:"Net", f:false},
+    {n:"Payload Gen", d:"Exploit", c:"Web", f:false},
+    {n:"Rootkit Det", d:"System", c:"Web", f:false},
+    {n:"Forensics", d:"Files", c:"Web", f:false},
+    {n:"Nmap Sim", d:"Scan", c:"Net", f:false},
+    {n:"SSH Force", d:"Auth", c:"Net", f:false},
+    {n:"Ransom Sim", d:"Lab", c:"Cripto", f:false},
+    {n:"Bypass AV", d:"Evasion", c:"Web", f:false},
+    {n:"Android Ex", d:"Mobile", c:"Web", f:false},
+    {n:"Social Eng", d:"Phishing", c:"Web", f:false},
+    {n:"Browser ID", d:"Finger", c:"Web", f:false},
+    {n:"URL Safe", d:"Clean", c:"Conv", f:false},
+    {n:"Secure Vault", d:"Storage", c:"Cripto", f:false},
+    {n:"Pass Auditor", d:"Sec", c:"Cripto", f:false}
 ];
 
-let loop;
-const container = document.getElementById("container");
+let activeFilter = 'all';
 
 function showProjects() {
-    if(loop) cancelAnimationFrame(loop);
-    document.getElementById("home-view").style.display = "none";
-    document.getElementById("app-view").style.display = "none";
-    const pv = document.getElementById("projects-view");
-    pv.style.display = "grid";
-    pv.innerHTML = projects.map((p,i) => `<div class="card" onclick="launch(${i})"><strong>${p.n}</strong><br><small>${p.t=='G'?'JUEGO':'SCRIPT'}</small></div>`).join('');
+    hideAll();
+    document.getElementById("projects-view").style.display = "flex";
+    applyFilters();
 }
 
-function launch(i) {
-    document.getElementById("projects-view").style.display = "none";
-    document.getElementById("app-view").style.display = "flex";
+function showContact() {
+    hideAll();
+    document.getElementById("contact-view").style.display = "flex";
+}
+
+function hideAll() {
+    ["home-view", "projects-view", "contact-view", "app-view"].forEach(id => {
+        document.getElementById(id).style.display = "none";
+    });
+}
+
+function setFilter(f) {
+    activeFilter = f;
+    applyFilters();
+}
+
+function applyFilters() {
+    const search = document.getElementById("search-input").value.toLowerCase();
+    const container = document.getElementById("grid-container");
+    
+    const filtered = projects.filter(p => {
+        const matchSearch = p.n.toLowerCase().includes(search);
+        const matchCat = (activeFilter === 'all') || 
+                         (activeFilter === 'func' && p.f) || 
+                         (p.c === activeFilter);
+        return matchSearch && matchCat;
+    });
+
+    container.innerHTML = filtered.map(p => {
+        const idx = projects.findIndex(orig => orig.n === p.n);
+        return `
+        <div class="card" onclick="launch(${idx})">
+            <span class="tag">${p.c}</span>
+            <strong>${p.n}</strong>
+            <small>${p.d}</small>
+        </div>`;
+    }).join('');
+}
+
+async function launch(i) {
+    hideAll();
+    const view = document.getElementById("app-view");
     const app = document.getElementById("app-container");
     const p = projects[i];
-    app.innerHTML = `<h2>${p.n}</h2>`;
-    
-    // Solo implemento algunos juegos básicos que funcionan
-    if(p.n === "Neon Jump") {
-        app.innerHTML += `<canvas id="c" width="400" height="150"></canvas><p>Usa ESPACIO para saltar</p>`;
-        runJump();
-    } else if(p.n === "Aim Trainer") {
-        app.innerHTML += `<div id="aimArea" style="width:400px;height:400px;border:1px solid white;position:relative;margin:0 auto">
-            <div id="target" style="width:40px;height:40px;background:red;border-radius:50%;position:absolute;cursor:pointer"></div>
-        </div><p>Puntos: <span id="score">0</span></p>`;
-        setupAimTrainer();
-    } else if(p.n === "Snake") {
-        app.innerHTML += `<canvas id="snakeGame" width="400" height="400"></canvas><p>Usa flechas para mover | Puntos: <span id="snakeScore">0</span></p>`;
-        setupSnake();
-    } else if(p.n === "Reaction") {
-        app.innerHTML += `<div id="reactionBox" style="width:300px;height:300px;background:#111;border:2px solid white;margin:20px auto;display:flex;align-items:center;justify-content:center;cursor:pointer">
-            <h3>Haz click para empezar</h3>
-        </div><p>Tiempo: <span id="reactionTime">0</span> ms</p>`;
-        setupReaction();
-    } else if(p.n === "Clicker") {
-        app.innerHTML += `<div style="padding:20px">
-            <h1 id="clickCount">0</h1>
-            <button class="btn" onclick="document.getElementById('clickCount').textContent = parseInt(document.getElementById('clickCount').textContent) + 1">CLICK</button>
-            <br><br>
-            <button class="btn" onclick="document.getElementById('clickCount').textContent = 0">Reset</button>
-        </div>`;
-    } else if(p.n === "Pong") {
-        app.innerHTML += `<canvas id="pongGame" width="400" height="400"></canvas><p>Usa W/S para mover</p>`;
-        setupPong();
-    } else if(p.n === "Hex Gen") {
-        app.innerHTML += `<div id="hexColor" style="width:200px;height:200px;border:1px solid white;margin:20px auto"></div>
-        <p id="hexCode">#FFFFFF</p>
-        <button class="btn" onclick="generateHex()">Generar Color</button>`;
-        generateHex();
-    } else if(p.n === "Notes") {
-        app.innerHTML += `<textarea id="notesArea" style="width:300px;height:200px;background:#111;color:white;border:1px solid white;padding:10px">${localStorage.getItem('notes') || ''}</textarea>
-        <br><br>
-        <button class="btn" onclick="saveNotes()">Guardar</button>`;
-    } else {
-        app.innerHTML += `<div style="padding:40px; border:1px solid var(--border); border-radius:10px">
-            <p>${p.n} - ${p.t=='G'?'JUEGO':'SCRIPT'}</p>
-            <p style="opacity:0.7">(Demo funcional)</p>
-        </div>`;
-    }
-}
+    view.style.display = "flex";
+    app.innerHTML = `<h3>> ${p.n}</h3><div class="tool-box" id="ui"></div>`;
+    const ui = document.getElementById("ui");
 
-// JUEGOS FUNCIONALES
+    if (!p.f) {
+        ui.innerHTML = `<div class="res">Módulo [${p.n}] actualmente en desarrollo para la v7.0...</div>`;
+        return;
+    }
 
-function runJump() {
-    const ctx = document.getElementById('c').getContext('2d');
-    let y = 120, vy = 0, ox = 400, score = 0;
-    
-    function update() {
-        ctx.fillStyle = "black";
-        ctx.fillRect(0, 0, 400, 150);
-        
-        vy += 0.8;
-        y += vy;
-        if(y > 120) y = 120;
-        
-        ctx.fillStyle = "white";
-        ctx.fillRect(50, y, 20, 20);
-        
-        ox -= 6;
-        if(ox < -20) {
-            ox = 400;
-            score++;
-        }
-        
-        ctx.fillStyle = "red";
-        ctx.fillRect(ox, 120, 20, 20);
-        
-        ctx.fillStyle = "white";
-        ctx.fillText("Score: " + score, 10, 20);
-        
-        if(ox < 70 && ox > 30 && y > 100) {
-            score = 0;
-        }
-    }
-    
-    function gameLoop() {
-        update();
-        loop = requestAnimationFrame(gameLoop);
-    }
-    
-    document.onkeydown = function(e) {
-        if(e.code === 'Space' && y === 120) {
-            vy = -12;
-        }
-    };
-    
-    gameLoop();
-}
-
-function setupAimTrainer() {
-    const target = document.getElementById('target');
-    const scoreEl = document.getElementById('score');
-    let score = 0;
-    
-    function moveTarget() {
-        const area = document.getElementById('aimArea');
-        const x = Math.random() * (area.offsetWidth - 40);
-        const y = Math.random() * (area.offsetHeight - 40);
-        target.style.left = x + 'px';
-        target.style.top = y + 'px';
-    }
-    
-    target.onclick = function() {
-        score++;
-        scoreEl.textContent = score;
-        moveTarget();
-    };
-    
-    moveTarget();
-}
-
-function setupSnake() {
-    const canvas = document.getElementById('snakeGame');
-    const ctx = canvas.getContext('2d');
-    const size = 20;
-    let snake = [{x: 10, y: 10}];
-    let food = {x: 15, y: 15};
-    let dx = 0, dy = 0;
-    let score = 0;
-    
-    function draw() {
-        ctx.fillStyle = 'black';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        ctx.fillStyle = 'lime';
-        snake.forEach(segment => {
-            ctx.fillRect(segment.x * size, segment.y * size, size-2, size-2);
-        });
-        
-        ctx.fillStyle = 'red';
-        ctx.fillRect(food.x * size, food.y * size, size-2, size-2);
-    }
-    
-    function update() {
-        const head = {x: snake[0].x + dx, y: snake[0].y + dy};
-        
-        if(head.x < 0 || head.x >= canvas.width/size || 
-           head.y < 0 || head.y >= canvas.height/size) {
-            snake = [{x: 10, y: 10}];
-            dx = dy = 0;
-            score = 0;
-            document.getElementById('snakeScore').textContent = score;
-            return;
-        }
-        
-        snake.unshift(head);
-        
-        if(head.x === food.x && head.y === food.y) {
-            score += 10;
-            document.getElementById('snakeScore').textContent = score;
-            food = {
-                x: Math.floor(Math.random() * (canvas.width/size)),
-                y: Math.floor(Math.random() * (canvas.height/size))
+    // LÓGICA FUNCIONAL
+    switch(p.n) {
+        case "SHA-256":
+            ui.innerHTML = `<textarea id="i" oninput="run()" placeholder="Texto..."></textarea><div class="res" id="r"></div>`;
+            window.run = async () => { const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(document.getElementById('i').value)); document.getElementById('r').innerText = Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join(''); };
+            break;
+        case "Base64":
+            ui.innerHTML = `<textarea id="i" oninput="run()"></textarea><div class="res" id="r"></div>`;
+            window.run = () => { try { document.getElementById('r').innerText = "Enc: " + btoa(document.getElementById('i').value); } catch(e) {} };
+            break;
+        case "IP Tracker":
+            ui.innerHTML = `<button class="btn" style="width:100%" onclick="run()">SCAN IP</button><div class="res" id="r"></div>`;
+            window.run = () => { 
+                fetch('https://ipapi.co/json/').then(r=>r.json()).then(d=>{
+                    document.getElementById('r').innerText = `IP: ${d.ip}\nOrg: ${d.org}\nLoc: Barcelona, Catalonia (ES)`; 
+                }); 
             };
-        } else {
-            snake.pop();
-        }
+            break;
+        case "Binary Conv":
+            ui.innerHTML = `<input id="i" oninput="run()"><div class="res" id="r"></div>`;
+            window.run = () => { document.getElementById('r').innerText = document.getElementById('i').value.split('').map(c=>c.charCodeAt(0).toString(2).padStart(8,'0')).join(' '); };
+            break;
+        case "Morse Code":
+            ui.innerHTML = `<input id="i" oninput="run()" placeholder="Mensaje..."><div class="res" id="r"></div>`;
+            window.run = () => { const m = {'a': '.-', 'b': '-...', 'c': '-.-.', 'd': '-..', 'e': '.', 'f': '..-.', 'g': '--.', 'h': '....', 'i': '..', 'j': '.---', 'k': '-.-', 'l': '.-..', 'm': '--', 'n': '-.', 'o': '---', 'p': '.--.', 'q': '--.-', 'r': '.-.', 's': '...', 't': '-', 'u': '..-', 'v': '...-', 'w': '.--', 'x': '-..-', 'y': '-.--', 'z': '--..', '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.', '0': '-----', ' ': '/'}; document.getElementById('r').innerText = document.getElementById('i').value.toLowerCase().split('').map(c => m[c] || '').join(' '); };
+            break;
+        case "HEX View":
+            ui.innerHTML = `<input id="i" oninput="run()"><div class="res" id="r"></div>`;
+            window.run = () => { document.getElementById('r').innerText = document.getElementById('i').value.split('').map(c=>c.charCodeAt(0).toString(16).toUpperCase()).join(' '); };
+            break;
+        case "MAC Gen":
+            ui.innerHTML = `<button class="btn" style="width:100%" onclick="run()">GENERATE</button><div class="res" id="r"></div>`;
+            window.run = () => { document.getElementById('r').innerText = "XX:XX:XX:XX:XX:XX".replace(/X/g, () => "0123456789ABCDEF".charAt(Math.floor(Math.random()*16))); };
+            break;
+        case "Metadata":
+            ui.innerHTML = `<input type="file" onchange="run(this)"><div class="res" id="r">Analiza un archivo local</div>`;
+            window.run = (el) => { let f = el.files[0]; document.getElementById('r').innerText = `Name: ${f.name}\nSize: ${f.size} bytes\nType: ${f.type}`; };
+            break;
     }
-    
-    document.onkeydown = function(e) {
-        switch(e.key) {
-            case 'ArrowUp': if(dy !== 1) { dx = 0; dy = -1; } break;
-            case 'ArrowDown': if(dy !== -1) { dx = 0; dy = 1; } break;
-            case 'ArrowLeft': if(dx !== 1) { dx = -1; dy = 0; } break;
-            case 'ArrowRight': if(dx !== -1) { dx = 1; dy = 0; } break;
-        }
-    };
-    
-    function gameLoop() {
-        update();
-        draw();
-        loop = requestAnimationFrame(gameLoop);
-    }
-    
-    gameLoop();
 }
 
-function setupReaction() {
-    const box = document.getElementById('reactionBox');
-    const timeEl = document.getElementById('reactionTime');
-    let startTime;
-    let waiting = false;
-    
-    box.onclick = function() {
-        if(!waiting) {
-            box.innerHTML = '<h3>Espera...</h3>';
-            box.style.background = '#900';
-            waiting = true;
-            
-            setTimeout(() => {
-                box.innerHTML = '<h3>¡CLICK!</h3>';
-                box.style.background = '#090';
-                startTime = Date.now();
-            }, Math.random() * 2000 + 1000);
-        } else {
-            const reactionTime = Date.now() - startTime;
-            timeEl.textContent = reactionTime;
-            box.innerHTML = '<h3>Haz click para empezar</h3>';
-            box.style.background = '#111';
-            waiting = false;
-        }
-    };
-}
-
-function setupPong() {
-    const canvas = document.getElementById('pongGame');
-    const ctx = canvas.getContext('2d');
-    let ball = {x: 200, y: 200, vx: 4, vy: 2, r: 10};
-    let paddle = {x: 10, y: 175, w: 10, h: 50};
-    
-    function draw() {
-        ctx.fillStyle = 'black';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        ctx.fillStyle = 'white';
-        ctx.fillRect(paddle.x, paddle.y, paddle.w, paddle.h);
-        
-        ctx.beginPath();
-        ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
-        ctx.fill();
-        
-        ctx.setLineDash([5, 15]);
-        ctx.beginPath();
-        ctx.moveTo(canvas.width/2, 0);
-        ctx.lineTo(canvas.width/2, canvas.height);
-        ctx.stroke();
-    }
-    
-    function update() {
-        ball.x += ball.vx;
-        ball.y += ball.vy;
-        
-        if(ball.y < 0 || ball.y > canvas.height) ball.vy *= -1;
-        if(ball.x < 0 || ball.x > canvas.width) ball.vx *= -1;
-        
-        if(ball.x - ball.r < paddle.x + paddle.w &&
-           ball.y > paddle.y && ball.y < paddle.y + paddle.h) {
-            ball.vx = Math.abs(ball.vx);
-        }
-        
-        ball.vy += (Math.random() - 0.5) * 0.1;
-    }
-    
-    document.onkeydown = function(e) {
-        if(e.key === 'w' && paddle.y > 0) paddle.y -= 20;
-        if(e.key === 's' && paddle.y < canvas.height - paddle.h) paddle.y += 20;
-    };
-    
-    function gameLoop() {
-        update();
-        draw();
-        loop = requestAnimationFrame(gameLoop);
-    }
-    
-    gameLoop();
-}
-
-function generateHex() {
-    const color = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
-    document.getElementById('hexColor').style.background = color;
-    document.getElementById('hexCode').textContent = color;
-}
-
-function saveNotes() {
-    localStorage.setItem('notes', document.getElementById('notesArea').value);
-    alert('Notas guardadas');
-}
-
-// MOVIMIENTO 3D ORIGINAL
-container.addEventListener("mousemove", (e) => {
+// 3D EFFECT
+const container = document.getElementById("container");
+document.addEventListener("mousemove", (e) => {
     const rect = container.getBoundingClientRect();
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
-    container.style.transform = `perspective(1000px) rotateY(${x * 0.01}deg) rotateX(${-y * 0.01}deg)`;
-});
-
-container.addEventListener("mouseleave", () => {
-    container.style.transform = "perspective(1000px) rotateY(0deg) rotateX(0deg)";
+    container.style.transform = `perspective(1000px) rotateY(${x * 0.005}deg) rotateX(${-y * 0.005}deg)`;
 });
 </script>
 </body>
