@@ -163,7 +163,11 @@
         }
 
         /* --- VIEW: TOOLS & CONTACT --- */
-        #app-view, #contact-view { display: none; flex-direction: column; height: 100%; width: 100%; max-width: 800px; margin: 0 auto; }
+        #app-view, #contact-view { display: none; flex-direction: column; height: 100%; width: 100%; }
+        /* Contacto ahora ocupa todo el ancho disponible */
+        #contact-view { max-width: 100%; }
+        #app-view { max-width: 800px; margin: 0 auto; }
+
         
         .tool-box { 
             flex-grow: 1; 
@@ -173,6 +177,40 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
+        }
+
+        /* Nueva Grid para Contacto: Formulario + Mapa */
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            height: 100%;
+        }
+
+        .map-container {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border);
+            padding: 5px;
+            background: #000;
+        }
+
+        .map-frame {
+            width: 100%;
+            flex-grow: 1;
+            border: none;
+            filter: grayscale(100%) invert(90%) contrast(120%); /* Efecto Cyberpunk */
+        }
+        
+        .phone-input-group {
+            display: flex;
+            gap: 5px;
+        }
+        .phone-prefix {
+            width: 110px;
+            background: #000;
+            color: var(--accent);
+            border: 1px solid #444;
         }
 
         .terminal-output {
@@ -188,7 +226,7 @@
             flex-grow: 1;
         }
 
-        .contact-form input, .contact-form textarea {
+        .contact-form input, .contact-form textarea, .contact-form select {
             width: 100%;
             background: #111;
             border: 1px solid #444;
@@ -196,6 +234,11 @@
             padding: 10px;
             margin-bottom: 10px;
             font-family: var(--font-main);
+        }
+        
+        .contact-form input:focus, .contact-form textarea:focus {
+            border-color: var(--accent);
+            outline: none;
         }
 
         .footer { display: flex; justify-content: center; gap: 15px; padding-top: 15px; border-top: 1px solid var(--border); margin-top: auto; }
@@ -210,6 +253,75 @@
             background: var(--accent);
             transition: width 0.5s;
         }
+
+        /* --- MEDIA QUERIES (RESPONSIVE) --- */
+        @media (max-width: 768px) {
+            body { 
+                padding: 0; 
+                height: auto; 
+                min-height: 100vh;
+                overflow-y: auto; 
+            }
+            
+            .container {
+                height: auto;
+                min-height: 100vh;
+                border: none;
+                border-radius: 0;
+                grid-template-rows: auto 1fr auto;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .main-content {
+                overflow: visible; /* Permitir scroll nativo */
+                flex-grow: 1;
+            }
+
+            /* Header Stack */
+            .header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            /* Home */
+            .title-box h1 { font-size: 2.5rem; }
+
+            /* Grid Projects */
+            .grid-container {
+                grid-template-columns: 1fr; /* Una sola columna en movil */
+                overflow: visible;
+            }
+            #projects-view {
+                height: auto;
+                overflow: visible;
+            }
+
+            /* Contact Layout Stack */
+            .contact-layout {
+                grid-template-columns: 1fr; /* Apilar formulario y mapa */
+                height: auto;
+            }
+            
+            .map-container {
+                height: 300px;
+            }
+            
+            .tool-box {
+                overflow: visible;
+                height: auto;
+            }
+
+            /* Ajustar inputs */
+            .filter-btns {
+                justify-content: center;
+            }
+            .filter-btns .btn {
+                flex-grow: 1;
+                font-size: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -221,6 +333,7 @@
             <span id="date-display" style="font-size:10px; color:#888;"></span>
             <select class="lang-select" id="lang-select" onchange="changeLang()">
                 <option value="es">ES</option>
+                <option value="ca">CA</option>
                 <option value="en">EN</option>
                 <option value="fr">FR</option>
                 <option value="de">DE</option>
@@ -253,19 +366,53 @@
         </div>
 
         <div id="contact-view">
-            <div class="tool-box">
-                <h3 id="c-title" style="color:var(--accent); border-bottom: 1px solid var(--accent); padding-bottom:10px; margin-top:0;"></h3>
-                <div style="margin-bottom: 20px;">
-                    <p>> <span id="l-name"></span> Ayoub Sfili Doggoun</p>
-                    <p>> <span id="l-phone"></span> +34 652 458 952</p>
-                    <p>> EMAIL: ayoub.sfili.7e9@itb.cat</p>
+            <h3 id="c-title" style="color:var(--accent); border-bottom: 1px solid var(--accent); padding-bottom:10px; margin-top:0;"></h3>
+            
+            <div class="contact-layout">
+                <div class="tool-box" style="border:none; background:transparent; padding:0;">
+                    <div style="margin-bottom: 15px;">
+                        <p style="margin:5px 0">> <span id="l-name"></span> Ayoub Sfili</p>
+                        <p style="margin:5px 0">> EMAIL: ayoub.sfili.7e9@itb.cat</p>
+                    </div>
+                    
+                    <div class="contact-form">
+                        <label id="lbl-name" style="font-size:10px; color:#666">NOMBRE</label>
+                        <input type="text" id="form-name" placeholder="">
+                        
+                        <label id="lbl-email" style="font-size:10px; color:#666">EMAIL</label>
+                        <input type="email" id="form-email" placeholder="user@domain.com">
+
+                        <label id="lbl-phone" style="font-size:10px; color:#666">TELÉFONO</label>
+                        <div class="phone-input-group">
+                            <select id="form-prefix" class="phone-prefix">
+                                <option value="+34">🇪🇸 +34</option>
+                                <option value="+1">🇺🇸 +1</option>
+                                <option value="+44">🇬🇧 +44</option>
+                                <option value="+33">🇫🇷 +33</option>
+                                <option value="+49">🇩🇪 +49</option>
+                                <option value="+212">🇲🇦 +212</option>
+                            </select>
+                            <input type="tel" id="form-phone" placeholder="000 000 000" style="margin-bottom:10px;">
+                        </div>
+
+                        <label id="lbl-desc" style="font-size:10px; color:#666">MOTIVO / MENSAJE</label>
+                        <textarea id="form-desc" rows="4" placeholder=""></textarea>
+                        
+                        <button class="btn" id="c-btn-send" style="width:100%; border-color:var(--accent); color:var(--accent)" onclick="sendContact()"></button>
+                    </div>
                 </div>
-                <div class="contact-form">
-                    <input type="text" id="form-name" placeholder="">
-                    <textarea id="form-desc" rows="5" placeholder=""></textarea>
-                    <button class="btn" id="c-btn-send" style="width:100%; border-color:var(--accent); color:var(--accent)" onclick="sendContact()"></button>
+
+                <div class="map-container">
+                    <div style="margin-bottom:5px; font-size:11px; color:var(--accent)">
+                        > TARGET: INSTITUT TECNOLÒGIC DE BARCELONA
+                    </div>
+                    <iframe class="map-frame" 
+                        src="https://maps.google.com/maps?q=Institut+Tecnol%C3%B2gic+de+Barcelona&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                        allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
                 </div>
             </div>
+            
             <button class="btn" id="c-back" style="margin-top:10px" onclick="showHome()"></button>
         </div>
 
@@ -293,23 +440,44 @@ const langDict = {
     es: {
         sub: "ESTUDIANTE DE CIBERSEGURIDAD", h: "[ INICIO ]", p: "[ PROYECTOS ]", c: "[ CONTACTO ]",
         all: "TODOS", func: "FUNCIONALES", cripto: "CRIPTO", net: "REDES", conv: "CONVERSORES",
-        cTitle: "ENCRIPTAR_MENSAJE // CONTACTO", send: "EJECUTAR ENVÍO",
-        back: "< VOLVER", close: "FINALIZAR PROCESO", pName: "Identidad del Remitente", pDesc: "Carga útil del mensaje...",
-        lName: "AGENTE:", lPhone: "ENLACE:", sPlaceholder: "BUSCAR_MODULO...",
+        cTitle: "CANAL SEGURO // CONTACTO", send: "ENVIAR TRANSMISIÓN",
+        back: "< VOLVER", close: "FINALIZAR PROCESO", 
+        pName: "Identidad", pDesc: "Detalle de la solicitud...",
+        lName: "AGENTE:", 
+        labels: { n: "NOMBRE", e: "EMAIL", p: "TELÉFONO", d: "MOTIVO / MENSAJE" },
+        sPlaceholder: "BUSCAR_MODULO...",
         wait: "Esperando entrada de datos...", write: "Ingrese datos aquí...", 
         scan: "OBTENER IP PÚBLICA",
         tracking: "INICIANDO HANDSHAKE CON SERVIDOR EXTERNO...", 
         gen: "GENERAR MAC", dev: "ERROR 404: MÓDULO NO ENCONTRADO O EN DESARROLLO",
-        // Aquí definimos la ubicación "Spoofed" (Falsa/Forzada)
         spoof_loc: "Barcelona, Cataluña, España",
         cat: { Cripto: "CRIPTOGRAFÍA", Net: "REDES", Conv: "CONVERSIÓN", Web: "WEB AUDIT", Data: "DATOS" }
+    },
+    ca: {
+        sub: "ESTUDIANT DE CIBERSEGURETAT", h: "[ INICI ]", p: "[ PROJECTES ]", c: "[ CONTACTE ]",
+        all: "TOTS", func: "FUNCIONALS", cripto: "CRIPTO", net: "XARXES", conv: "CONVERTIDORS",
+        cTitle: "CANAL SEGUR // CONTACTE", send: "ENVIAR TRANSMISSIÓ",
+        back: "< TORNAR", close: "TANCAR PROCÉS", 
+        pName: "Identitat", pDesc: "Detalls de la sol·licitud...",
+        lName: "AGENT:", 
+        labels: { n: "NOM", e: "EMAIL", p: "TELÈFON", d: "MOTIU / MISSATGE" },
+        sPlaceholder: "CERCAR_MODUL...",
+        wait: "Esperant dades...", write: "Introdueix dades...", 
+        scan: "OBTENIR IP PÚBLICA",
+        tracking: "INICIANT HANDSHAKE AMB SERVIDOR EXTERN...", 
+        gen: "GENERAR MAC", dev: "ERROR 404: MÒDUL NO TROBAT O EN DESENVOLUPAMENT",
+        spoof_loc: "Barcelona, Catalunya, Espanya",
+        cat: { Cripto: "CRIPTOGRAFIA", Net: "XARXES", Conv: "CONVERSIÓ", Web: "AUDITORIA WEB", Data: "DADES" }
     },
     en: {
         sub: "CYBERSECURITY STUDENT", h: "[ HOME ]", p: "[ PROJECTS ]", c: "[ CONTACT ]",
         all: "ALL", func: "WORKING", cripto: "CRYPTO", net: "NETWORK", conv: "CONVERTERS",
-        cTitle: "ENCRYPT_MESSAGE // CONTACT", send: "EXECUTE SEND",
-        back: "< BACK", close: "KILL PROCESS", pName: "Sender Identity", pDesc: "Message Payload...",
-        lName: "AGENT:", lPhone: "UPLINK:", sPlaceholder: "SEARCH_MODULE...",
+        cTitle: "SECURE_CHANNEL // CONTACT", send: "SEND TRANSMISSION",
+        back: "< BACK", close: "KILL PROCESS", 
+        pName: "Identity", pDesc: "Request details...",
+        lName: "AGENT:", 
+        labels: { n: "NAME", e: "EMAIL", p: "PHONE", d: "REASON / MESSAGE" },
+        sPlaceholder: "SEARCH_MODULE...",
         wait: "Awaiting data input...", write: "Input data here...", 
         scan: "GET PUBLIC IP",
         tracking: "INITIATING HANDSHAKE WITH EXTERNAL SERVER...", 
@@ -320,11 +488,14 @@ const langDict = {
     fr: {
         sub: "ÉTUDIANT EN CYBERSÉCURITÉ", h: "[ ACCUEIL ]", p: "[ PROJETS ]", c: "[ CONTACT ]",
         all: "TOUS", func: "FONCTIONNEL", cripto: "CRYPTO", net: "RÉSEAU", conv: "CONV",
-        cTitle: "ENCRYPTER_MESSAGE // CONTACT", send: "ENVOYER",
-        back: "< RETOUR", close: "TERMINER", pName: "Identité", pDesc: "Message...",
-        lName: "AGENT:", lPhone: "LIAISON:", sPlaceholder: "CHERCHER...",
+        cTitle: "CANAL_SÉCURISÉ // CONTACT", send: "ENVOYER",
+        back: "< RETOUR", close: "TERMINER", 
+        pName: "Identité", pDesc: "Détails...",
+        lName: "AGENT:", 
+        labels: { n: "NOM", e: "EMAIL", p: "TÉLÉPHONE", d: "MOTIF / MESSAGE" },
+        sPlaceholder: "CHERCHER...",
         wait: "En attente...", write: "Saisir données...", 
-        scan: "OBTENIR IP PUBLIQUE",
+        scan: "OBTENER IP PUBLIQUE",
         tracking: "INITIALISATION DU HANDSHAKE...", 
         gen: "GÉNÉRER MAC", dev: "ERREUR 404: MODULE EN DÉVELOPPEMENT",
         spoof_loc: "Barcelone, Catalogne, Espagne",
@@ -333,9 +504,12 @@ const langDict = {
     de: {
         sub: "IT-SICHERHEIT STUDENT", h: "[ HOME ]", p: "[ PROJEKTE ]", c: "[ KONTAKT ]",
         all: "ALLE", func: "FUNKTIONAL", cripto: "KRYPTO", net: "NETZWERK", conv: "KONV",
-        cTitle: "NACHRICHT_VERSCHLÜSSELN", send: "SENDEN",
-        back: "< ZURÜCK", close: "BEENDEN", pName: "Identität", pDesc: "Nachricht...",
-        lName: "AGENT:", lPhone: "VERBINDUNG:", sPlaceholder: "SUCHEN...",
+        cTitle: "SICHERER_KANAL // KONTAKT", send: "SENDEN",
+        back: "< ZURÜCK", close: "BEENDEN", 
+        pName: "Identität", pDesc: "Nachricht...",
+        lName: "AGENT:", 
+        labels: { n: "NAME", e: "EMAIL", p: "TELEFON", d: "GRUND / NACHRICHT" },
+        sPlaceholder: "SUCHEN...",
         wait: "Warten auf Eingabe...", write: "Daten eingeben...", 
         scan: "ÖFFENTLICHE IP ABRUFEN",
         tracking: "HANDSHAKE WIRD INITIALISIERT...", 
@@ -352,6 +526,7 @@ const langDict = {
  * ------------------------------------------------------------------
  */
 const projects = [
+    // Existing Functional
     {n:"SHA-256 Hasher", c:"Cripto", f:true}, 
     {n:"Base64 Encoder", c:"Conv", f:true},
     {n:"IP Tracker", c:"Net", f:true}, 
@@ -359,11 +534,25 @@ const projects = [
     {n:"Morse Code", c:"Conv", f:true}, 
     {n:"HEX Viewer", c:"Conv", f:true},
     {n:"MAC Generator", c:"Net", f:true}, 
+    
+    // Existing Dev
     {n:"Subnet Calc", c:"Net", f:false},
     {n:"Port Scanner", c:"Net", f:false}, 
     {n:"SQL Injector", c:"Web", f:false},
     {n:"Steganography", c:"Cripto", f:false}, 
-    {n:"Password Gen", c:"Cripto", f:false}
+    {n:"Password Gen", c:"Cripto", f:false},
+
+    // NEW ADDED PROJECTS (Placeholders)
+    {n:"WiFi Deauther", c:"Net", f:false},
+    {n:"Keylogger Sim", c:"Data", f:false},
+    {n:"Packet Sniffer", c:"Net", f:false},
+    {n:"Brute Force Tool", c:"Cripto", f:false},
+    {n:"XSS Tester", c:"Web", f:false},
+    {n:"Malware Analysis", c:"Data", f:false},
+    {n:"VPN Tunnel", c:"Net", f:false},
+    {n:"Firewall Rule Gen", c:"Net", f:false},
+    {n:"Rootkit Detector", c:"Data", f:false},
+    {n:"Social Eng. Toolkit", c:"Web", f:false}
 ];
 
 // State Variables
@@ -417,12 +606,17 @@ function changeLang() {
     document.getElementById('c-btn-send').innerText = d.send;
     document.getElementById('c-back').innerText = d.back;
     document.getElementById('app-close-btn').innerText = d.close;
-    document.getElementById('form-name').placeholder = d.pName;
-    document.getElementById('form-desc').placeholder = d.pDesc;
     document.getElementById('l-name').innerText = d.lName;
-    document.getElementById('l-phone').innerText = d.lPhone;
     document.getElementById('search-input').placeholder = d.sPlaceholder;
     
+    // Contact Form Labels & Placeholders
+    document.getElementById('lbl-name').innerText = d.labels.n;
+    document.getElementById('lbl-email').innerText = d.labels.e;
+    document.getElementById('lbl-phone').innerText = d.labels.p;
+    document.getElementById('lbl-desc').innerText = d.labels.d;
+    document.getElementById('form-name').placeholder = d.pName;
+    document.getElementById('form-desc').placeholder = d.pDesc;
+
     applyFilters();
     updateDate();
     
@@ -472,10 +666,18 @@ function toggleTheme() {
 
 function sendContact() {
     const name = document.getElementById('form-name').value;
-    if(name) {
-        alert("PACKET SENT SUCCESSFULLY TO: 7E9-ITB-SEC");
+    const email = document.getElementById('form-email').value;
+    const prefix = document.getElementById('form-prefix').value;
+    const phone = document.getElementById('form-phone').value;
+    
+    if(name && email) {
+        alert(`ENCRYPTED PACKET SENT TO: 7E9-ITB-SEC\nFROM: ${name}\nCONTACT: ${email} / ${prefix} ${phone}`);
         document.getElementById('form-name').value = "";
+        document.getElementById('form-email').value = "";
+        document.getElementById('form-phone').value = "";
         document.getElementById('form-desc').value = "";
+    } else {
+        alert("ERROR: MISSING REQUIRED FIELDS (NAME/EMAIL)");
     }
 }
 
@@ -534,9 +736,6 @@ async function launch(i, isRefresh = false) {
                     
                     if(data.success) {
                         // 2. CONSTRUIR RESPUESTA HÍBRIDA
-                        // Real: IP, ISP, Connection Type
-                        // Fake: City, Region, Country (Forzado a Barcelona)
-                        
                         setTimeout(() => {
                             r.innerHTML = `
 <span style="color:#fff">TARGET ACQUIRED:</span>
@@ -552,7 +751,7 @@ ZONE    : Europe/Madrid
 ----------------------------------------
 STATUS  : ENCRYPTED_TUNNEL_ACTIVE
                             `;
-                        }, 500); // Pequeño delay para realismo
+                        }, 500); 
                     } else {
                         throw new Error("API Error");
                     }
