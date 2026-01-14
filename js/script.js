@@ -19,7 +19,17 @@ const langDict = {
         gen: "GENERAR MAC", dev: "ERROR 404: MÓDULO NO ENCONTRADO O EN DESARROLLO",
         spoof_loc: "Barcelona, Cataluña, España",
         selProj: "> PROYECTOS DESTACADOS",
-        cat: { Cripto: "CRIPTOGRAFÍA", Net: "REDES", Conv: "CONVERSIÓN", Web: "WEB AUDIT", Data: "DATOS" }
+        cat: { Cripto: "CRIPTOGRAFÍA", Net: "REDES", Conv: "CONVERSIÓN", Web: "WEB AUDIT", Data: "DATOS" },
+        // DESCRIPCIONES DE PROYECTOS
+        projDesc: {
+            "SHA-256 Hasher": "Genera un hash criptográfico seguro (SHA-256) a partir de cualquier texto.",
+            "Base64 Encoder": "Codifica y decodifica cadenas de texto en formato Base64.",
+            "IP Tracker": "Rastrea tu IP pública y simula una geolocalización de red.",
+            "Binary Converter": "Traduce texto plano a código binario (010101) y viceversa.",
+            "Morse Code": "Convierte texto estándar a código Morse para transmisiones.",
+            "HEX Viewer": "Muestra la representación hexadecimal de los caracteres ASCII.",
+            "MAC Generator": "Genera direcciones MAC aleatorias para pruebas de spoofing."
+        }
     },
     ca: {
         sub: "ESTUDIANT DE CIBERSEGURETAT", h: "[ INICI ]", p: "[ PROJECTES ]", c: "[ CONTACTE ]",
@@ -36,7 +46,16 @@ const langDict = {
         gen: "GENERAR MAC", dev: "ERROR 404: MÒDUL NO TROBAT O EN DESENVOLUPAMENT",
         spoof_loc: "Barcelona, Catalunya, Espanya",
         selProj: "> PROJECTES DESTACATS",
-        cat: { Cripto: "CRIPTOGRAFIA", Net: "XARXES", Conv: "CONVERSIÓ", Web: "AUDITORIA WEB", Data: "DADES" }
+        cat: { Cripto: "CRIPTOGRAFIA", Net: "XARXES", Conv: "CONVERSIÓ", Web: "AUDITORIA WEB", Data: "DADES" },
+        projDesc: {
+            "SHA-256 Hasher": "Genera un hash criptogràfic segur (SHA-256) a partir de qualsevol text.",
+            "Base64 Encoder": "Codifica i descodifica cadenes de text en format Base64.",
+            "IP Tracker": "Rastreja la teva IP pública i simula una geolocalització de xarxa.",
+            "Binary Converter": "Tradueix text pla a codi binari (010101) i viceversa.",
+            "Morse Code": "Converteix text estàndard a codi Morse per a transmissions.",
+            "HEX Viewer": "Mostra la representació hexadecimal dels caràcters ASCII.",
+            "MAC Generator": "Genera adreces MAC aleatòries per a proves de spoofing."
+        }
     },
     en: {
         sub: "CYBERSECURITY STUDENT", h: "[ HOME ]", p: "[ PROJECTS ]", c: "[ CONTACT ]",
@@ -54,7 +73,16 @@ const langDict = {
         gen: "GENERATE MAC", dev: "ERROR 404: MODULE NOT FOUND OR IN DEV",
         spoof_loc: "Barcelona, Catalonia, Spain",
         selProj: "> SELECTED PROJECTS",
-        cat: { Cripto: "CRYPTOGRAPHY", Net: "NETWORK", Conv: "CONVERSION", Web: "WEB AUDIT", Data: "DATA" }
+        cat: { Cripto: "CRYPTOGRAPHY", Net: "NETWORK", Conv: "CONVERSION", Web: "WEB AUDIT", Data: "DATA" },
+        projDesc: {
+            "SHA-256 Hasher": "Generates a secure cryptographic hash (SHA-256) from any text.",
+            "Base64 Encoder": "Encodes and decodes text strings in Base64 format.",
+            "IP Tracker": "Tracks your public IP and simulates network geolocation.",
+            "Binary Converter": "Translates plain text to binary code (010101) and vice versa.",
+            "Morse Code": "Converts standard text to Morse code for transmission.",
+            "HEX Viewer": "Displays the hexadecimal representation of ASCII characters.",
+            "MAC Generator": "Generates random MAC addresses for spoofing tests."
+        }
     },
     fr: {
         sub: "ÉTUDIANT EN CYBERSÉCURITÉ", h: "[ ACCUEIL ]", p: "[ PROJETS ]", c: "[ CONTACT ]",
@@ -71,7 +99,16 @@ const langDict = {
         gen: "GÉNÉRER MAC", dev: "ERREUR 404: MODULE EN DÉVELOPPEMENT",
         spoof_loc: "Barcelone, Catalogne, Espagne",
         selProj: "> PROJETS SÉLECTIONNÉS",
-        cat: { Cripto: "CRYPTOGRAPHIE", Net: "RÉSEAU", Conv: "CONVERSION", Web: "WEB AUDIT", Data: "DONNÉES" }
+        cat: { Cripto: "CRYPTOGRAPHIE", Net: "RÉSEAU", Conv: "CONVERSION", Web: "WEB AUDIT", Data: "DONNÉES" },
+        projDesc: {
+            "SHA-256 Hasher": "Génère un hachage cryptographique sécurisé (SHA-256) à partir d'un texte.",
+            "Base64 Encoder": "Encode et décode des chaînes de texte au format Base64.",
+            "IP Tracker": "Traque votre IP publique et simule une géolocalisation réseau.",
+            "Binary Converter": "Traduit le texte brut en code binaire (010101) et vice versa.",
+            "Morse Code": "Convertit le texte standard en code Morse pour les transmissions.",
+            "HEX Viewer": "Affiche la représentation hexadécimale des caractères ASCII.",
+            "MAC Generator": "Génère des adresses MAC aléatoires pour les tests d'usurpation."
+        }
     },
     de: {
         sub: "IT-SICHERHEIT STUDENT", h: "[ HOME ]", p: "[ PROJEKTE ]", c: "[ KONTAKT ]",
@@ -88,18 +125,25 @@ const langDict = {
         gen: "MAC GENERIEREN", dev: "FEHLER 404: MODUL IN ENTWICKLUNG",
         spoof_loc: "Barcelona, Katalonien, Spanien",
         selProj: "> AUSGEWÄHLTE PROJEKTE",
-        cat: { Cripto: "KRYPTOGRAPHIE", Net: "NETZWERK", Conv: "KONVERSION", Web: "WEB AUDIT", Data: "DATEN" }
+        cat: { Cripto: "KRYPTOGRAPHIE", Net: "NETZWERK", Conv: "KONVERSION", Web: "WEB AUDIT", Data: "DATEN" },
+        projDesc: {
+            "SHA-256 Hasher": "Erzeugt einen sicheren kryptographischen Hash (SHA-256) aus Text.",
+            "Base64 Encoder": "Kodiert und dekodiert Textzeichenfolgen im Base64-Format.",
+            "IP Tracker": "Verfolgt Ihre öffentliche IP und simuliert Netzwerk-Geolokalisierung.",
+            "Binary Converter": "Übersetzt Klartext in Binärcode (010101) und umgekehrt.",
+            "Morse Code": "Konvertiert Standardtext in Morsecode für Übertragungen.",
+            "HEX Viewer": "Zeigt die hexadezimale Darstellung von ASCII-Zeichen an.",
+            "MAC Generator": "Generiert zufällige MAC-Adressen für Spoofing-Tests."
+        }
     }
 };
 
 /**
  * ------------------------------------------------------------------
  * PROJECT REPOSITORY
- * f: true (Functional), f: false (Development)
  * ------------------------------------------------------------------
  */
 const projects = [
-    // Existing Functional
     {n:"SHA-256 Hasher", c:"Cripto", f:true},
     {n:"Base64 Encoder", c:"Conv", f:true},
     {n:"IP Tracker", c:"Net", f:true},
@@ -108,14 +152,12 @@ const projects = [
     {n:"HEX Viewer", c:"Conv", f:true},
     {n:"MAC Generator", c:"Net", f:true},
 
-    // Existing Dev
     {n:"Subnet Calc", c:"Net", f:false},
     {n:"Port Scanner", c:"Net", f:false},
     {n:"SQL Injector", c:"Web", f:false},
     {n:"Steganography", c:"Cripto", f:false},
     {n:"Password Gen", c:"Cripto", f:false},
 
-    // NEW ADDED PROJECTS (Placeholders)
     {n:"WiFi Deauther", c:"Net", f:false},
     {n:"Keylogger Sim", c:"Data", f:false},
     {n:"Packet Sniffer", c:"Net", f:false},
@@ -146,7 +188,6 @@ function hideAll() {
 function showHome() {
     currentAppIndex = -1; hideAll();
     document.getElementById("home-view").style.display = "flex";
-    // Flex direction is handled by CSS class now
 }
 
 function showProjects() {
@@ -180,25 +221,26 @@ function changeLang() {
     document.getElementById('app-close-btn').innerText = d.close;
     document.getElementById('l-name').innerText = d.lName;
     document.getElementById('search-input').placeholder = d.sPlaceholder;
-    document.getElementById('sel-label').innerText = d.selProj; // NUEVO
+    document.getElementById('sel-label').innerText = d.selProj;
 
     // Contact Form Labels & Placeholders
     document.getElementById('lbl-name').innerText = d.labels.n;
     document.getElementById('lbl-email').innerText = d.labels.e;
     document.getElementById('lbl-phone').innerText = d.labels.p;
     document.getElementById('lbl-desc').innerText = d.labels.d;
-    document.getElementById('form-name').placeholder = d.pName;
-    document.getElementById('form-desc').placeholder = d.pDesc;
+    if(document.getElementById('form-name')) document.getElementById('form-name').placeholder = d.pName;
+    if(document.getElementById('form-desc')) document.getElementById('form-desc').placeholder = d.pDesc;
 
     applyFilters();
     updateDate();
-    // Hot-reload active application
+    // Hot-reload active application to update description
     if(currentAppIndex !== -1) launch(currentAppIndex, true);
 }
 
 function updateDate() {
     const now = new Date();
     document.getElementById('date-display').innerText = now.toISOString().split('T')[0];
+    document.getElementById('current-year').innerText = now.getFullYear();
 }
 
 function setFilter(f) {
@@ -262,8 +304,15 @@ async function launch(i, isRefresh = false) {
     const d = langDict[l];
     const appView = document.getElementById("app-view");
     const p = projects[i];
+
     appView.style.display = "flex";
     document.getElementById("app-header").innerText = `> EXEC: ${p.n}`;
+
+    // --- NUEVO: INSERTAR LA DESCRIPCIÓN DEL PROYECTO ---
+    const descEl = document.getElementById("app-desc");
+    // Busca si hay descripción para este proyecto en el idioma actual, si no pone vacío
+    descEl.innerText = (d.projDesc && d.projDesc[p.n]) ? `// ${d.projDesc[p.n]}` : "";
+
     const ui = document.getElementById("ui");
     // Handle Dev Projects
     if (!p.f) {

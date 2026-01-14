@@ -67,8 +67,20 @@ body {
     opacity: 0.3;
 }
 
+/* HEADER & LOGO */
 .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; z-index: 100;
     border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+
+.branding { display: flex; align-items: center; gap: 15px; }
+.logo-img {
+    height: 40px;
+    width: auto;
+    filter: grayscale(100%) drop-shadow(0 0 2px var(--accent));
+    border: 1px solid var(--accent);
+    padding: 2px;
+    background: rgba(0, 255, 65, 0.05);
+}
+
 .header-controls { display: flex; align-items: center;
     gap: 10px; }
 
@@ -103,7 +115,7 @@ body {
 .main-content { position: relative;
     width: 100%; height: 100%; overflow: hidden; }
 
-/* --- VIEW: HOME (MODIFICADO PARA SELECTED PROJECTS) --- */
+/* --- VIEW: HOME --- */
 #home-view {
     display: flex;
     flex-direction: column;
@@ -116,7 +128,7 @@ body {
 .title-box {
     text-align: center;
     width: 80%;
-    margin-bottom: 40px; /* Espacio para los proyectos abajo */
+    margin-bottom: 40px;
 }
 .title-box h1 {
     font-size: clamp(2rem, 5vw, 4rem);
@@ -125,7 +137,6 @@ body {
     text-shadow: 2px 2px 0px var(--accent);
 }
 
-/* ESTILOS NUEVOS: SELECTED PROJECTS */
 .selected-section {
     width: 100%;
     max-width: 700px;
@@ -311,8 +322,19 @@ body {
     outline: none;
 }
 
-.footer { display: flex; justify-content: center; gap: 15px; padding-top: 15px;
-    border-top: 1px solid var(--border); margin-top: auto; }
+/* FOOTER */
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+}
+.footer-nav { display: flex; gap: 15px; }
+.footer-copy { font-size: 10px; color: var(--border); opacity: 0.6; letter-spacing: 1px; }
+
 
 @keyframes blink { 0%, 100% { opacity: 1;
 } 50% { opacity: 0; } }
@@ -354,8 +376,6 @@ body {
     }
     .filter-btns .btn { flex-grow: 1; font-size: 10px;
     }
-
-    /* Ajuste para Selected Projects en móvil */
     .mini-grid { flex-direction: column;
     }
     .mini-card { width: 100%;
